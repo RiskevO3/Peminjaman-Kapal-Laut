@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'balance',
     ];
 
     /**
@@ -44,5 +46,28 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Set the role attribute.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setRoleAttribute(string $value): void
+    {
+        $allowedRoles = ['user', 'admin'];
+        if (!in_array($value, $allowedRoles)) {
+            throw new \InvalidArgumentException("Invalid role: $value");
+        }
+        $this->attributes['role'] = $value;
+    }
+    
+    /**
+     * Get the ships borrowed by the user.
+     */
+    public function borrowedShips()
+    {
+        return $this->hasMany(BorrowedShip::class);
     }
 }
