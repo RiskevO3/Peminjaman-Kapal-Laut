@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Ship;
+use App\Models\ShipCategory;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed users
         User::factory(10)->create();
+
+        // Seed ship categories
+        ShipCategory::factory(5)->create();
+
+        // Seed ships
         Ship::factory(10)->create();
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

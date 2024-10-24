@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Ship;
+use App\Models\ShipCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -28,5 +30,19 @@ class ShipFactory extends Factory
             'price' => $this->faker->numberBetween(1000, 5000),
             'penalty_fee' => $this->faker->numberBetween(100, 500),
         ];
+    }
+
+    /**
+     * Configure the factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Ship $ship) {
+            $categoryIds = ShipCategory::pluck('id')->toArray();
+            $randomCategoryId = $this->faker->randomElement($categoryIds);
+            $ship->categories()->attach($randomCategoryId);
+        });
     }
 }

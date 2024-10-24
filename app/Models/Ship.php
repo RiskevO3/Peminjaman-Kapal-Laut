@@ -30,4 +30,12 @@ class Ship extends Model
     {
         return $this->hasMany(BorrowedShip::class);
     }
+
+        /**
+     * The categories that belong to the ship.
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(ShipCategory::class, 'ship_category_ship');
+    }
 }
